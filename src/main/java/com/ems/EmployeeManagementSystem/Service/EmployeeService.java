@@ -7,20 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ems.EmployeeManagementSystem.Entity.Employee;
-import com.ems.EmployeeManagementSystem.Repository.DoctorRepository;
+import com.ems.EmployeeManagementSystem.Repository.EmployeeRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class EmployeeService {
 	@Autowired
-	private DoctorRepository doctorRepository;
+	private EmployeeRepository employeerRepository;
 
 	public Employee saveEmployee(Employee employee) {
-		Employee save = doctorRepository.save(employee);
+		Employee save = employeerRepository.save(employee);
 		if (employee != null) {
-			doctorRepository.save(employee);
-			System.out.println("Save Scuuessfully" + save);
+			employeerRepository.save(employee);
+		System.out.println("Save Scuuessfully" + save);
 		} else {
 			System.out.println("Not Save Data");
 		}
@@ -29,16 +29,16 @@ public class EmployeeService {
 	}
 
 	public List<Employee> getAllEmployees() {
-		return doctorRepository.findAll();
+		return employeerRepository.findAll();
 	}
 
 	public Optional<Employee> getEmployeeById(Long id) {
-		return doctorRepository.findById(id);
+		return employeerRepository.findById(id);
 	}
 
 	@Transactional
 	public Employee updateEmployee(Long id, Employee updatedEmployee) {
-		Employee existingEmployee = doctorRepository.findById(id)
+		Employee existingEmployee = employeerRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Employee not found"));
 
 		existingEmployee.setName(updatedEmployee.getName());
@@ -47,12 +47,12 @@ public class EmployeeService {
 		existingEmployee.setSalary(updatedEmployee.getSalary());
 		existingEmployee.setJoiningDate(updatedEmployee.getJoiningDate());
 
-		return doctorRepository.save(existingEmployee);
+		return employeerRepository.save(existingEmployee);
 	}
 
 	@Transactional
 	public void deleteEmployee(Long id) {
-		doctorRepository.deleteById(id);
+		employeerRepository.deleteById(id);
 	}
 
 }
